@@ -1,4 +1,4 @@
-// Saves frames of the opening sequence (0.5, 1.2, 1.9, 2.6 and 3.5 s) to docs/preview/intro/. Uses the installed Chrome.
+// Saves frames of the opening sequence (0.5, 2, 3.5, 4.5, 5.3, 6.2 and 7.2 s) to docs/preview/intro/. Uses the installed Chrome.
 // Usage: npm run build && node scripts/capture-intro.mjs
 import { preview } from 'vite';
 import { chromium } from 'playwright';
@@ -8,7 +8,7 @@ mkdirSync('docs/preview/intro', { recursive: true });
 const server = await preview({ preview: { port: 4230 } });
 const url = server.resolvedUrls.local[0];
 const browser = await chromium.launch({ channel: 'chrome' });
-const TIMES = [500, 1200, 1900, 2600, 3500];
+const TIMES = [500, 2000, 3500, 4500, 5300, 6200, 7200];
 
 for (const [name, width, height] of [['1280x720', 1280, 720], ['400x800', 400, 800]]) {
   const context = await browser.newContext({ viewport: { width, height } });

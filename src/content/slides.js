@@ -5,13 +5,11 @@ import { PRESENTATION_URL } from '../config.js';
 // `html` is the markup inside each <section class="slide">.
 
 // QR code block (slides 1 and 10). Only exists when PRESENTATION_URL is set (src/config.js).
-const shortUrl = PRESENTATION_URL.replace(/^https?:\/\//, '').replace(/\/$/, '');
 const qr = (size) =>
   PRESENTATION_URL
     ? `<div class="qr qr-${size} fade" style="--i:12">
     <img src="brand/qr.svg" alt="Código QR para abrir la presentación en el celular" />
     <p>Abrila en tu celular</p>
-    <code>${shortUrl}</code>
   </div>`
     : '';
 

@@ -8,7 +8,6 @@ import { prefersReducedMotion, EASE } from './motion.js';
 //   5.6-7.2  the logo moves and shrinks (FLIP) to its place on slide 1 while the slide builds itself
 // Only transform and opacity are animated, except the particle canvas.
 
-const SEEN_KEY = 'genlab-intro';
 const NS = 'http://www.w3.org/2000/svg';
 const PENDING = ['intro-active', 'intro-bg', 'intro-stage', 'intro-chrome', 'intro-logo'];
 
@@ -64,13 +63,11 @@ const easeOut = (t) => 1 - Math.pow(1 - t, 2.2); // keeps moving until it lands
 export function createIntro({ onStage, onEnd } = {}) {
   let running = null; // cleanup function while the intro plays
 
-  // Same rule as the early script in index.html: first open in this session, no slide number in the URL.
+  // Same rule as the early script in index.html: it plays every time the page is opened or reloaded,
+  // unless the URL asks for another slide (#2 ... #10) or motion is reduced. Empty hash or #1 plays.
   function shouldPlay() {
-    try {
-      return !location.hash && !sessionStorage.getItem(SEEN_KEY) && !prefersReducedMotion();
-    } catch (e) {
-      return false;
-    }
+    const slide = parseInt(location.hash.slice(1), 10);
+    return (!location.hash || slide === 1) && !prefersReducedMotion();
   }
 
   async function loadAssets(theme) {
@@ -203,9 +200,6 @@ export function createIntro({ onStage, onEnd } = {}) {
   // `delay` (ms) waits before starting, so the slide you came from can finish its exit transition.
   async function play({ delay = 0 } = {}) {
     if (running || prefersReducedMotion()) return;
-    try {
-      sessionStorage.setItem(SEEN_KEY, '1');
-    } catch (e) {}
     setPending(true);
 
     const theme = root.dataset.theme === 'light' ? 'light' : 'dark';

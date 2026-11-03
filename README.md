@@ -2,7 +2,7 @@
 
 Presentación de 10 diapositivas sobre el chatbot de GenLab (módulo adicional 8, M11): qué recibe el endpoint, qué devuelve, qué errores da y cuándo. Hecha con Vite y JavaScript vanilla, sin frameworks. Las fuentes están incluidas en el proyecto, así que funciona sin internet.
 
-Dura unos 18,5 minutos con la demo en vivo. Es de uso interno del equipo para la clase, y no contiene claves ni tokens reales.
+Dura unos 18,5 minutos (más unos 7 segundos de intro) con la demo en vivo. Es de uso interno del equipo para la clase, y no contiene claves ni tokens reales.
 
 ## Índice
 
@@ -139,14 +139,14 @@ Con «reducir movimiento» activado en el sistema, todo aparece de golpe, no hay
 
 ### Animación de entrada
 
-Antes de la diapositiva 1 se reproduce una intro de unos 3,5 segundos: el ícono del logo se arma con partículas, aparece «GEN LAB» letra por letra y el logo se acomoda en su lugar mientras se construye la pantalla de bienvenida. Está en `src/intro.js` (los tiempos están al principio del archivo) y `src/styles/intro.css`.
+Antes de la diapositiva 1 se reproduce una intro de unos 7 segundos: partículas que flotan y se condensan en el ícono del logo, «GEN LAB» que aparece letra por letra, una pausa para leerlo y el logo que se acomoda en su lugar mientras se construye la pantalla de bienvenida. Está en `src/intro.js`, y todos los tiempos son constantes en segundos al principio de ese archivo (objeto `SECONDS`) para ajustarlos.
 
-- Se reproduce solo la primera vez que se abre la presentación en la pestaña (se recuerda con `sessionStorage`). Si recargás o volvés a la diapositiva 1 con las flechas, no se repite.
-- No hay intro si la URL trae un número de diapositiva (`#5`) ni con «reducir movimiento» activado.
-- Para saltarla: clic, `Espacio`, `Enter`, `Esc` o cualquier flecha. `F`, `P` y `T` siguen funcionando. Mientras corre, la navegación está desactivada y el presentador sigue mostrando la diapositiva 1.
-- `I` la reproduce de nuevo (te lleva a la diapositiva 1). Para ensayarla sin cerrar la pestaña.
-- Si el logo no carga, la intro se salta sin mostrar errores.
-- En celular arranca con el logo más chico y la mitad de las partículas.
+- Se reproduce **cada vez** que se abre o se recarga la página sin número de diapositiva o con `#1` (el link que lleva el QR termina en `#1`, así que también se ve desde el celular).
+- Se reproduce de nuevo **cada vez que volvés a la diapositiva 1** (flecha izquierda, `PageUp`, `Inicio` o el primer punto). La diapositiva anterior sale con su transición normal y recién ahí empieza la intro.
+- No hay intro si la URL pide otra diapositiva (`#2` a `#10`) ni con «reducir movimiento» activado. Ojo: muchos celulares tienen «quitar animaciones» activado en accesibilidad, y entonces tampoco se ve.
+- Para saltarla: clic, `Espacio`, `Enter`, `Esc` o cualquier flecha. Queda la diapositiva 1 completa. `F`, `P` y `T` siguen funcionando. Mientras corre, la navegación está desactivada y el presentador ya muestra la diapositiva 1 (el cronómetro no se reinicia).
+- `I` la reproduce de nuevo (útil para ensayar).
+- Si el logo no carga, la intro se salta sin mostrar errores. En celular arranca con el logo más chico y la mitad de las partículas.
 
 ## Exportar a PDF
 
@@ -158,9 +158,33 @@ Genera `genlab-chatbot.pdf` con una diapositiva por página, en 16:9. Usa Playwr
 
 Para revisar cómo se ve a distintos tamaños: `npm run build` y después `node scripts/capture-preview.mjs`. Las capturas quedan en `docs/preview/`.
 
+## Publicar en GitHub Pages
+
+La presentación se publica sola con `.github/workflows/deploy.yml` en cada push a `main` (`npm ci`, `npm run build` y las acciones oficiales de GitHub Pages).
+
+1. Creá el repositorio en GitHub (por ejemplo `GenLab_Presentacion`) y subí el código a la rama `main`. Si tu rama local se llama `master`, renombrala con `git branch -M main`.
+2. En el repositorio: **Settings > Pages > Build and deployment > Source: GitHub Actions**.
+3. Hacé push. En la pestaña **Actions** se ve el despliegue, y el sitio queda en `https://<usuario>.github.io/<repositorio>/`.
+
+El workflow pasa `VITE_BASE=/<repositorio>/` a Vite, porque el sitio vive en una subruta. En local no hace falta: `npm run dev` y `npm run preview` usan `/`. Para probar la subruta en tu máquina (en PowerShell): `$env:VITE_BASE="/GenLab_Presentacion/"; npm run build; npm run preview`. En Git Bash, anteponé `MSYS_NO_PATHCONV=1`, o convierte la ruta en una de Windows.
+
+### El código QR
+
+Las diapositivas 1 y 10 muestran un QR que apunta a `PRESENTATION_URL`, definida en `src/config.js` (hoy `https://santiagoc1.github.io/GenLab_Presentacion/#1`). Para cambiarla, editá esa línea; si la dejás vacía, el QR no se muestra. También se puede sobreescribir con la variable `VITE_PRESENTATION_URL`.
+
+- Se genera solo antes de `npm run dev` y `npm run build` (`scripts/make-qr.mjs`, paquete `qrcode`, sin internet) y queda en `public/brand/qr.svg`, que no se sube a Git. Para regenerarlo a mano: `npm run qr`.
+- Es oscuro sobre fondo claro con margen de 4 módulos, para que se lea desde una pantalla oscura. Corrección de errores nivel M.
+- No se muestra en celulares (hasta 560 px de ancho). También sale en el PDF.
+- Para comprobar que decodifica exactamente la URL: `node scripts/verify-qr.mjs`.
+
+### Antes de publicar: nada de claves reales
+
+El repositorio y el sitio son públicos. No subas claves, tokens ni archivos `.env` (`.gitignore` ya excluye `.env`). Las diapositivas solo llevan los marcadores `sb_publishable_xxx` y `<token del grupo>`. Antes de publicar buscá en el proyecto `sb_publishable_` con valores distintos de `xxx`, `eyJ` (JWT), `token-local` y valores reales de `apikey`. La carpeta `design/` no está en `public/`, así que no se publica en el sitio (sí queda en el repositorio).
+
 ## Checklist del día de la presentación
 
 - [ ] `npm run build` y `npm run preview` funcionando. Probalo sin internet.
+- [ ] Sitio publicado abierto desde un celular: el QR de la pantalla principal lo lleva a la presentación.
 - [ ] Las 6 capturas en `public/screenshots/` y visibles en las diapositivas 6 y 8.
 - [ ] Servidor local del chatbot listo para la demo (`scripts/local-server.ts` del repo del chatbot, con Node 24: `node --experimental-strip-types --no-warnings scripts/local-server.ts`).
 - [ ] `chatbot.http` con las variables completas en tu copia local, sin subirlas a Git.
@@ -184,11 +208,13 @@ Para revisar cómo se ve a distintos tamaños: `npm run build` y después `node 
 
 ```
 index.html / presenter.html   las dos páginas
+.github/workflows/deploy.yml  publicación en GitHub Pages
 public/
   screenshots/                capturas de los casos (200, 401, 422, 429, 503, health)
   brand/                      logos y favicon
 src/
   main.js                     arranca la presentación
+  config.js                   PRESENTATION_URL (dirección del QR)
   deck.js                     navegación, transiciones, hash, progreso, puntos y sincronización
   intro.js                    animación de entrada (partículas, logo, FLIP)
   motion.js                   detección de «reducir movimiento» y contadores
@@ -201,5 +227,7 @@ scripts/
   export-pdf.mjs              exporta a PDF
   capture-preview.mjs         capturas de revisión en docs/preview/
   capture-intro.mjs           cuadros de la intro en docs/preview/intro/
+  make-qr.mjs                 genera public/brand/qr.svg
+  verify-qr.mjs               comprueba que el QR devuelve la URL
   check-contrast.mjs          tabla de contraste WCAG de los dos temas
 ```

@@ -10,7 +10,8 @@
     <script>
       // Opening sequence: hide the deck before the first paint when it is going to play (see src/intro.js).
       try {
-        if (!location.hash && !sessionStorage.getItem('genlab-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches)
+        var slide = parseInt(location.hash.slice(1), 10);
+        if ((!location.hash || slide === 1) && !matchMedia('(prefers-reduced-motion: reduce)').matches)
           document.documentElement.classList.add('intro-active', 'intro-bg', 'intro-stage', 'intro-chrome', 'intro-logo');
       } catch (e) {}
     </script>
