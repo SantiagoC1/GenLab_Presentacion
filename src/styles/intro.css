@@ -1,0 +1,16 @@
+/* Opening sequence (src/intro.js). The classes on <html> hide parts of the deck until each one is revealed. */
+.aurora,.grid{transition:opacity 1.4s ease}
+.hud,.hint,.progress-bar,.brand{transition:opacity .4s ease}
+
+html.intro-bg .aurora{opacity:.3}
+html.intro-bg .grid{opacity:0}
+/* only slide 1 is hidden, so the slide you leave can still play its exit transition */
+html.intro-stage .slide.on{opacity:0}
+html.intro-chrome .hud,html.intro-chrome .hint,html.intro-chrome .progress-bar,html.intro-chrome .brand{opacity:0}
+html.intro-logo .logo-hero{visibility:hidden}
+html.intro-active .hud{pointer-events:none}
+
+.intro{position:fixed;inset:0;z-index:40;cursor:pointer}
+.intro-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.intro-logo-box{position:absolute;transform-origin:0 0}
+.intro-logo-box svg{display:block;width:100%;height:100%;overflow:visible}

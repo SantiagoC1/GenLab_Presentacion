@@ -1,0 +1,59 @@
+/* Every color of the deck lives here. Dark is the default theme; light is [data-theme="light"].
+   The theme is set on <html> (see src/theme.js), never from the system setting. */
+
+/* Same in both themes */
+:root{
+  --serif:"Fraunces Variable",Georgia,serif;
+  --sans:"Figtree Variable",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --mask:#000;
+  /* screenshot viewer: always dark so the projected images read the same */
+  --viewer-bg:rgba(5,8,12,.9);
+  --viewer-ui-bg:rgba(21,26,34,.9);
+  --viewer-border:#6C7582;
+  --viewer-text:#EAF0F6;
+  --viewer-muted:#8B97A6;
+  --viewer-hover:#9B7BFF;
+  --viewer-shadow:rgba(0,0,0,.7);
+}
+
+:root,:root[data-theme="dark"]{
+  --bg:#0D1015; --panel:#151A22; --panel2:#1B2230; --hair:#252C38; --control-border:#6C7582; /* decorative lines use --hair; controls use --control-border (75% --muted over --bg) */
+  --txt:#EAF0F6; --muted:#8B97A6;
+  --accent:#9B7BFF; --accent-solid:#6D3DF0; --accent-soft:rgba(109,61,240,.16); --on-accent:#FFFFFF;
+  --magenta:#FF5FB7; --cyan:#74D7EC;
+  --signal:#FF8A4C; --signal-text:#FF8A4C; --signal-soft:rgba(255,138,76,.12);
+  --code:#080B10; --code-string:#E5B567; --code-key:#74D7EC;
+
+  /* status colors: separate from the brand */
+  --status-ok:#34D399; --status-auth:#F0504E; --status-warn:#E5B567; --status-info:#74D7EC; --status-error:#8B97A6;
+  --on-status:#0D1015; --status-ok-fill:#34D399;
+
+  /* signature gradient: highlighted title words and the progress bar only */
+  --grad-1:#6D3DF0; --grad-2:#E23A9E; --grad-3:#5ACAD6;
+  --gradient:linear-gradient(90deg,var(--grad-1),var(--grad-2),var(--grad-3));
+
+  --glow-1:rgba(109,61,240,.18); --glow-2:rgba(226,58,158,.10);
+  --shadow:rgba(0,0,0,.5);
+  --selection:rgba(255,95,183,.35);
+  color-scheme:dark;
+}
+
+:root[data-theme="light"]{
+  --bg:#F6F7FB; --panel:#FFFFFF; --panel2:#EEF0F8; --hair:#D5D9E8; --control-border:#818595;
+  --txt:#14122B; --muted:#5A5F73;
+  --accent:#5B34D6; --accent-solid:#5B34D6; --accent-soft:rgba(91,52,214,.10); --on-accent:#FFFFFF;
+  --magenta:#C2257F; --cyan:#0E7C8B;
+  --signal:#B4531A; --signal-text:#9C4415; --signal-soft:rgba(180,83,26,.10);
+  --code:#EAEDF6; --code-string:#8A5E0F; --code-key:#0B6C79;
+
+  --status-ok:#0E8A5F; --status-auth:#C73A38; --status-warn:#9A6A12; --status-info:#0E7C8B; --status-error:#5A5F73;
+  --on-status:#FFFFFF; --status-ok-fill:#0B7A53;
+
+  --grad-1:#5B34D6; --grad-2:#C2257F; --grad-3:#0E7C8B;
+
+  --glow-1:rgba(109,61,240,.08); --glow-2:rgba(226,58,158,.05);
+  --shadow:rgba(20,18,43,.18);
+  --selection:rgba(194,37,127,.22);
+  color-scheme:light;
+}

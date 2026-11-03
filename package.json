@@ -1,0 +1,26 @@
+{
+  "name": "genlab-chatbot-presentation",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "predev": "node scripts/make-qr.mjs",
+    "build": "vite build",
+    "prebuild": "node scripts/make-qr.mjs",
+    "preview": "vite preview",
+    "qr": "node scripts/make-qr.mjs",
+    "export:pdf": "node scripts/export-pdf.mjs"
+  },
+  "devDependencies": {
+    "jsqr": "^1.4.0",
+    "playwright": "^1.64.1",
+    "qrcode": "^1.5.4",
+    "vite": "^8.3.5"
+  },
+  "dependencies": {
+    "@fontsource-variable/figtree": "^5.3.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0"
+  }
+}

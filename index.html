@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      // Apply the saved theme before the first paint (dark by default, never from the system).
+      try { var t = localStorage.getItem('genlab-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+    <script>
+      // Opening sequence: hide the deck before the first paint when it is going to play (see src/intro.js).
+      try {
+        if (!location.hash && !sessionStorage.getItem('genlab-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches)
+          document.documentElement.classList.add('intro-active', 'intro-bg', 'intro-stage', 'intro-chrome', 'intro-logo');
+      } catch (e) {}
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/05_favicon_dark_32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/brand/05_favicon_dark_512.png" />
+    <link rel="apple-touch-icon" href="/brand/05_avatar-app_dark.png" />
+    <title>GenLab Chatbot</title>
+  </head>
+  <body>
+    <div class="aurora" aria-hidden="true"><i></i><i></i></div>
+    <div class="grid" aria-hidden="true"></div>
+    <div class="progress-bar" aria-hidden="true"><b id="progress"></b></div>
+    <div class="brand">
+      <img class="logo-dark" src="/brand/02_icono_dark_transparente.svg" alt="" />
+      <img class="logo-light" src="/brand/02_icono_light_transparente.svg" alt="" />
+      <span>módulo adicional 8</span>
+    </div>
+    <div class="hint">← → para avanzar</div>
+
+    <main class="stage" id="stage"></main>
+
+    <div class="hud">
+      <button id="prev" aria-label="Anterior"><span aria-hidden="true">←</span><span class="label"> Anterior</span></button>
+      <div class="hud-dots" id="dots"></div>
+      <span id="counter" style="min-width:48px;text-align:right">1 / 10</span>
+      <button id="next" aria-label="Siguiente" style="margin-left:10px"><span class="label">Siguiente </span><span aria-hidden="true">→</span></button>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

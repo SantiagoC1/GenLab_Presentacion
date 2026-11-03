@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // Apply the saved theme before the first paint (dark by default, never from the system).
+      try { var t = localStorage.getItem('genlab-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/05_favicon_dark_32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/brand/05_favicon_dark_512.png" />
+    <link rel="apple-touch-icon" href="/brand/05_avatar-app_dark.png" />
+    <title>GenLab Chatbot · Presentador</title>
+  </head>
+  <body class="presenter">
+    <div class="aurora" aria-hidden="true"><i></i><i></i></div>
+    <div class="presenter-layout">
+      <section class="presenter-notes">
+        <p class="kicker" id="p-position"></p>
+        <h2 id="p-title"></h2>
+        <p class="notes-text" id="p-notes"></p>
+      </section>
+      <aside class="presenter-side">
+        <div class="timer-box">
+          <span class="mono" id="p-timer">00:00</span>
+          <span class="timer-target" id="p-timer-target" title="Tiempo planificado"></span>
+          <button id="p-timer-toggle">Pausar</button>
+          <button id="p-timer-reset">Reiniciar</button>
+        </div>
+        <p class="kicker">Siguiente</p>
+        <div class="preview" id="p-preview"></div>
+        <p class="preview-title" id="p-next-title"></p>
+        <div class="presenter-nav">
+          <button id="p-prev">← Anterior</button>
+          <button id="p-next">Siguiente →</button>
+        </div>
+      </aside>
+    </div>
+    <script type="module" src="/src/presenter.js"></script>
+  </body>
+</html>

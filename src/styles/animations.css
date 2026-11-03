@@ -1,0 +1,19 @@
+/* Entrance motion: runs only on the active slide and always ends visible.
+   Elements are staggered in reading order with --i (60 ms apart). Only transform and opacity move. */
+@media (prefers-reduced-motion: no-preference){
+  .slide.on .reveal{animation:rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*60ms + 160ms)}
+  .slide.on .word>span{animation:word .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*50ms + 100ms)}
+  .slide.on .pop{animation:pop .45s cubic-bezier(.3,1.4,.4,1) both;animation-delay:calc(var(--i,0)*60ms + 200ms)}
+  .slide.on .fade{animation:fade .6s ease both;animation-delay:calc(var(--i,0)*60ms + 160ms)}
+  .slide.on .line{animation:line .35s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*90ms + 300ms)}
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+@keyframes word{from{transform:translateY(105%) rotate(4deg)}}
+@keyframes pop{from{opacity:0;transform:scale(.92)}}
+@keyframes fade{from{opacity:0}}
+@keyframes line{from{opacity:0;transform:translateX(-8px)}}
+
+/* reduced motion: the background aurora stays still too */
+@media (prefers-reduced-motion: reduce){
+  .aurora i{animation:none}
+}
